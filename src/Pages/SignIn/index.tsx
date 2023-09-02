@@ -12,15 +12,12 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import ChangeTheme from "../../components/changeTheme";
+import { useAuthContext } from "../../contexts/authContext";
+import { Alert } from "@mui/material";
 
 function Copyright({ site, link }: ICopyrightProps) {
   return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      my={2}
-    >
+    <Typography variant="body2" color="text.secondary" align="center" my={2}>
       {"Copyright © "}
       <Link color="inherit" href={link}>
         {site}
@@ -32,16 +29,19 @@ function Copyright({ site, link }: ICopyrightProps) {
 }
 
 export default function SignInPage() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const { signIn, signOut, error } = useAuthContext();
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
     const data = new FormData(event.currentTarget);
 
-    const dataform = {
+    const { email, password } = {
       email: data.get("email"),
       password: data.get("password"),
     };
 
-    console.log(dataform);
+    await signIn(email, password);
   };
 
   return (
@@ -129,14 +129,12 @@ export default function SignInPage() {
                 </Link>
               </Grid>
             </Grid>
-            <Copyright
-              site="Elias Dev"
-              link="https://mui.com/"
-            />
+            <Copyright site="Elias Dev" link="https://mui.com/" />
           </Box>
           <Box m={"0 auto"} p={4}>
             <ChangeTheme />
           </Box>
+          {error && <Alert severity="error">{error}</Alert>}
         </Box>
       </Grid>
     </Grid>
