@@ -3,7 +3,7 @@ import Container from "@mui/material/Container";
 import { Button } from "@mui/material";
 import { useThemeContext } from "../contexts/themeContext";
 
-export default function Login() {
+export default function ChangeTheme() {
   const { themeName, toggleTheme } = useThemeContext();
   return (
     <>

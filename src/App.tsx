@@ -5,13 +5,13 @@ import {
   createRoutesFromElements,
 } from "react-router-dom";
 import DefaultLayout from "./Layouts/defaultLayout";
-import Login from "./Pages/Login";
+import SignInPage from "./Pages/SignIn";
 
 export default function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<DefaultLayout />}>
-        <Route index element={<Login />} />
+        <Route index element={<SignInPage />} />
       </Route>
     )
   );
