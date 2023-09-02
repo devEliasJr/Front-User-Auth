@@ -14,6 +14,7 @@ import Typography from "@mui/material/Typography";
 import ChangeTheme from "../../components/changeTheme";
 import { useAuthContext } from "../../contexts/authContext";
 import { Alert } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 function Copyright({ site, link }: ICopyrightProps) {
   return (
@@ -29,7 +30,8 @@ function Copyright({ site, link }: ICopyrightProps) {
 }
 
 export default function SignInPage() {
-  const { signIn, signOut, error } = useAuthContext();
+  const { signIn, error } = useAuthContext();
+  const navigate = useNavigate();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -41,7 +43,15 @@ export default function SignInPage() {
       password: data.get("password"),
     };
 
-    await signIn(email, password);
+    if (!email && !password) {
+      return;
+    }
+
+    const res = await signIn(email, password);
+    const ApiSucesslogin = JSON.stringify(res);
+    if (ApiSucesslogin) {
+      navigate("/dashboard");
+    }
   };
 
   return (

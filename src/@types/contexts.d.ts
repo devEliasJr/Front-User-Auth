@@ -21,4 +21,5 @@ interface IAuthContext {
   user: IUserProps | undefined;
   authenticated: boolean;
   error: string | null;
+  loadingDashboard: boolean;
 }

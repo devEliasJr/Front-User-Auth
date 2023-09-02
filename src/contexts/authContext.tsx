@@ -12,6 +12,7 @@ export default function AuthProvider({ children }: any) {
   const [user, setUser] = useState<IUserProps | undefined>(undefined);
   const [authenticated, setAuthenticated] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [loadingDashboard, setLoadingDashboard] = useState<boolean>(true);
 
   const persistUser = async () => {
     const token = localStorage.getItem("ED_acess_token");
@@ -19,21 +20,19 @@ export default function AuthProvider({ children }: any) {
     if (token) {
       const { id } = jwtDecode(token) as IJWTProps;
 
-      setAuthenticated(true);
-
       try {
         const apiResponse = await fetchApi.get(`/users/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-
-        setUser(apiResponse.data);
         setAuthenticated(true);
+        setUser(apiResponse.data);
       } catch (error) {
         localStorage.removeItem("ED_acess_token");
       }
     }
+    setLoadingDashboard(false);
   };
 
   useEffect(() => {
@@ -67,7 +66,7 @@ export default function AuthProvider({ children }: any) {
 
   return (
     <AuthContext.Provider
-      value={{ signIn, signOut, user, authenticated, error }}
+      value={{ signIn, signOut, user, authenticated, error, loadingDashboard }}
     >
       {children}
     </AuthContext.Provider>
