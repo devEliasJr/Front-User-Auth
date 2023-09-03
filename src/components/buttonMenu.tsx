@@ -4,6 +4,8 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../contexts/authContext";
+import { Box } from "@mui/material";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 export default function PositionedMenu({ name }: any) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -27,7 +29,7 @@ export default function PositionedMenu({ name }: any) {
   };
 
   return (
-    <div>
+    <Box display={'flex'} alignItems={'center'}>
       <Button
         id="demo-positioned-button"
         aria-controls={open ? "demo-positioned-menu" : undefined}
@@ -37,6 +39,7 @@ export default function PositionedMenu({ name }: any) {
         variant="text"
         sx={{ color: "white" }}
         size="large"
+        startIcon={<AccountCircleIcon />}
       >
         {name}
       </Button>
@@ -59,6 +62,6 @@ export default function PositionedMenu({ name }: any) {
         <MenuItem onClick={handleClose}>My account</MenuItem>
         <MenuItem onClick={handleLogout}>Logout</MenuItem>
       </Menu>
-    </div>
+    </Box>
   );
 }

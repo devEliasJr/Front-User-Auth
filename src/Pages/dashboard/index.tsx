@@ -21,10 +21,15 @@ import {
   CardActions,
   CardContent,
   CardMedia,
+  Grid,
   Paper,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import PositionedMenu from "../../components/buttonMenu";
 import { useAuthContext } from "../../contexts/authContext";
+import fetchApi from "../../hooks/useApi";
+import CustomizedSwitches from "../../components/switchTheme";
 
 const drawerWidth = 240;
 
@@ -39,16 +44,58 @@ interface Props {
 export default function ResponsiveDrawer(props: Props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [users, setUsers] = React.useState<IUserProps[]>();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
-  const { user } = useAuthContext();
+  const { user, signOut } = useAuthContext();
+  const theme = useTheme();
+
+  const mdDown = useMediaQuery(theme.breakpoints.up("md"));
+
+  const GetUsers = async () => {
+    const token = localStorage.getItem("ED_acess_token");
+
+    try {
+      const apiResponse = await fetchApi.get("/users/", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setUsers(apiResponse.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  React.useEffect(() => {
+    GetUsers();
+  }, []);
 
   const drawer = (
     <div>
-      <Toolbar />
+      {!mdDown ? (
+        <Box
+          display={"flex"}
+          justifyContent={"center"}
+          alignItems={"center"}
+          py={2}
+          gap={2}
+        >
+          <Typography variant="button" textAlign={"center"}>
+            {user && user.name}
+          </Typography>
+          <Button variant="outlined" size="small" onClick={signOut}>
+            Logout
+          </Button>
+        </Box>
+      ) : (
+        <Toolbar />
+      )}
+
       <Divider />
       <List>
         {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
@@ -83,7 +130,6 @@ export default function ResponsiveDrawer(props: Props) {
 
   return (
     <Box sx={{ display: "flex" }}>
-      <CssBaseline />
       <AppBar
         position="fixed"
         sx={{
@@ -101,10 +147,15 @@ export default function ResponsiveDrawer(props: Props) {
           >
             <MenuIcon />
           </IconButton>
+
           <Typography variant="h6" noWrap component="div" flexGrow={1}>
-            Menu
+            Argos Plataform
           </Typography>
-          <PositionedMenu name={user && user.name} />
+
+          <Box display={mdDown ? "flex" : "none"}>
+            <CustomizedSwitches />
+            <PositionedMenu name={user && user.name} />
+          </Box>
         </Toolbar>
       </AppBar>
       <Box
@@ -155,26 +206,36 @@ export default function ResponsiveDrawer(props: Props) {
       >
         <Toolbar />
 
-        <Card sx={{ maxWidth: 345 }}>
-          <CardMedia
-            sx={{ height: 140 }}
-            image="https://mui.com/static/images/cards/contemplative-reptile.jpg"
-            title="green iguana"
-          />
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
-              Lizard
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              Lizards are a widespread group of squamate reptiles, with over
-              6,000 species, ranging across all continents except Antarctica
-            </Typography>
-          </CardContent>
-          <CardActions>
-            <Button size="small">Share</Button>
-            <Button size="small">Learn More</Button>
-          </CardActions>
-        </Card>
+        <Box maxWidth={"1500px"} m={"0 auto"} p={2}>
+          <Typography variant="h4" py={2}>
+            Users List
+          </Typography>
+          <Grid container spacing={2}>
+            {users &&
+              users.length > 0 &&
+              users.map((user) => (
+                <Grid item key={user.id} xs={12} sm={12} md={6} lg={4}>
+                  <Card>
+                    <CardMedia
+                      image="https://picsum.photos/200?grayscale"
+                      sx={{ width: "100%", height: 200 }}
+                    />
+                    <CardContent>
+                      <Typography gutterBottom variant="h5" component="div">
+                        {user.name}
+                      </Typography>
+                      <Typography gutterBottom variant="body2" component="div">
+                        {user.email}
+                      </Typography>
+                    </CardContent>
+                    <CardActions>
+                      <Button size="small">See More</Button>
+                    </CardActions>
+                  </Card>
+                </Grid>
+              ))}
+          </Grid>
+        </Box>
       </Box>
     </Box>
   );
