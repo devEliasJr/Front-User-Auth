@@ -1,18 +1,14 @@
 import { createTheme } from "@mui/material";
-import { red, grey } from "@mui/material/colors";
+import { red, grey, green } from "@mui/material/colors";
 
 export const DarkTheme = createTheme({
   palette: {
     primary: {
-      main: red[700], // Vermelho escuro como cor principal
-      dark: red[800],
-      light: red[500],
+      main: red[800],
       contrastText: "#ffffff",
     },
     secondary: {
-      main: grey[500], // Cinza como cor secundária
-      dark: grey[700],
-      light: grey[300],
+      main: green[500],
       contrastText: "#ffffff",
     },
     background: {
@@ -31,6 +27,8 @@ export const DarkTheme = createTheme({
   },
   typography: {
     fontFamily: "Roboto",
+    htmlFontSize: 16,
+
   },
   components: {
     MuiTextField: {

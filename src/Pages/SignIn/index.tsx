@@ -11,10 +11,10 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
-import ChangeTheme from "../../components/changeTheme";
 import { useAuthContext } from "../../contexts/authContext";
 import { Alert } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import CustomizedSwitches from "../../components/switchTheme";
 
 function Copyright({ site, link }: ICopyrightProps) {
   return (
@@ -124,6 +124,7 @@ export default function SignInPage() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              color="primary"
             >
               Sign In
             </Button>
@@ -142,7 +143,7 @@ export default function SignInPage() {
             <Copyright site="Elias Dev" link="https://mui.com/" />
           </Box>
           <Box m={"0 auto"} p={4}>
-            <ChangeTheme />
+            <CustomizedSwitches />
           </Box>
           {error && <Alert severity="error">{error}</Alert>}
         </Box>

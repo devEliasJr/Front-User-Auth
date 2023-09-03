@@ -1,24 +1,27 @@
 import { createTheme } from "@mui/material";
-import { cyan, red } from "@mui/material/colors";
+import { blue, cyan, grey, indigo, purple, red } from "@mui/material/colors";
 
 export const LightTheme = createTheme({
   palette: {
     primary: {
-      main: red[700],
-      dark: red[800],
-      light: red[500],
-      contrastText: "#ffffff",
+      main: indigo[700],
+      contrastText: "#fff",
     },
-
     secondary: {
-      main: cyan[700],
-      dark: cyan[800],
-      light: cyan[500],
+      main: purple[700],
       contrastText: "#ffffff",
     },
     background: {
       default: "#EDF2F7",
       paper: "#ffffff",
     },
+    text: {
+      primary: "#212121",
+      secondary: "#353535",
+    },
+  },
+  typography: {
+    fontFamily: "Roboto",
+    htmlFontSize: 16,
   },
 });
