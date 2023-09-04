@@ -7,7 +7,14 @@ import AppThemeProvider from "./contexts/themeContext";
 import AuthProvider from "./contexts/authContext";
 import { QueryClientProvider, QueryClient } from "react-query";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      staleTime: 1000 * 60 * 30,
+    },
+  },
+});
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>

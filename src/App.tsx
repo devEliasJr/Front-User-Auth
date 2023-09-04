@@ -23,6 +23,7 @@ export default function App() {
           index
           element={!user ? <SignInPage /> : <Navigate to="/dashboard" />}
         />
+
         <Route
           path="/dashboard"
           element={

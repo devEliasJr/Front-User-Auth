@@ -27,8 +27,8 @@ import {
 import PositionedMenu from "../../components/buttonMenu";
 import { useAuthContext } from "../../contexts/authContext";
 import CustomizedSwitches from "../../components/switchTheme";
-import { useGetUsers } from "../../hooks/useUserActions";
-
+import { useQuery } from "react-query";
+import { getUsers } from "../../hooks/useUserActions";
 
 const drawerWidth = 240;
 
@@ -37,6 +37,16 @@ interface Props {
 }
 
 export default function ResponsiveDrawer(props: Props) {
+  const {
+    data: getUsersFromData,
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ["usersdata"],
+    queryFn: getUsers,
+  });
+
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -46,8 +56,6 @@ export default function ResponsiveDrawer(props: Props) {
 
   const { user, signOut } = useAuthContext();
   const theme = useTheme();
-
-  const { getUsersFromData } = useGetUsers();
 
   const mdDown = useMediaQuery(theme.breakpoints.up("md"));
 
@@ -186,9 +194,11 @@ export default function ResponsiveDrawer(props: Props) {
             Users List
           </Typography>
           <Grid container spacing={2}>
-            {getUsersFromData &&
-              getUsersFromData.length > 0 &&
-              getUsersFromData.map((user) => (
+            {isLoading && <p>Loading...</p>}
+            {isError ? (
+              <p>{(error as Error).message}</p>
+            ) : (
+              getUsersFromData?.map((user) => (
                 <Grid item key={user.id} xs={12} sm={12} md={6} lg={4}>
                   <Card>
                     <CardMedia
@@ -208,7 +218,8 @@ export default function ResponsiveDrawer(props: Props) {
                     </CardActions>
                   </Card>
                 </Grid>
-              ))}
+              ))
+            )}
           </Grid>
         </Box>
       </Box>
