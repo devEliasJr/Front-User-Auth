@@ -29,6 +29,7 @@ import { useAuthContext } from "../../contexts/authContext";
 import CustomizedSwitches from "../../components/switchTheme";
 import { useQuery } from "react-query";
 import { getUsers } from "../../hooks/useUserActions";
+import DashboardCard from "../../components/dashboardCard";
 
 const drawerWidth = 240;
 
@@ -200,23 +201,7 @@ export default function ResponsiveDrawer(props: Props) {
             ) : (
               getUsersFromData?.map((user) => (
                 <Grid item key={user.id} xs={12} sm={12} md={6} lg={4}>
-                  <Card>
-                    <CardMedia
-                      image="https://picsum.photos/200?grayscale"
-                      sx={{ width: "100%", height: 200 }}
-                    />
-                    <CardContent>
-                      <Typography gutterBottom variant="h5" component="div">
-                        {user.name}
-                      </Typography>
-                      <Typography gutterBottom variant="body2" component="div">
-                        {user.email}
-                      </Typography>
-                    </CardContent>
-                    <CardActions>
-                      <Button size="small">See More</Button>
-                    </CardActions>
-                  </Card>
+                  <DashboardCard name={user.name} email={user.email} />
                 </Grid>
               ))
             )}
