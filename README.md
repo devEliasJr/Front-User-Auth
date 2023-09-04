@@ -2,13 +2,13 @@
 
 Este projeto fornece uma base sólida e pré-configurada para o desenvolvimento de aplicativos e sistemas que requerem autenticação de usuários. Ele segue as melhores práticas e utiliza tecnologias modernas para facilitar o início do desenvolvimento.
 
-Este Projeto é originalmente integrado com o backend em desenvolvido node
-### Back End em Node
+Este Projeto é originalmente integrado com um backend desenvolvido Node. Mas pode ser integrado com qualquer API e/ou linguagem.
+### Back End - Node:
 
 ```bash
 https://github.com/devEliasJr/Api-Node-User-Auth-Crud
 ```
-Mas pode ser integrado com qualquer API e linguagem desde que respeitem sigam os passos abaixo.
+
 
 <div>
   <div><img src="./public/FrontEndLogin.jpg" alt="Imagem 1"width="450"></div>
@@ -62,13 +62,13 @@ Para começar a utilizar este projeto, siga os passos abaixo:
 ### 2. Instale as dependências do projeto
 
 ```bash
- npm  intall
+ npm install
 ```
 
 ### 3. Instale as dependências do projeto
 
 ```bash
- npm  run dev
+ npm run dev
 ```
 
 ### 4. O projeto estará disponivel em:

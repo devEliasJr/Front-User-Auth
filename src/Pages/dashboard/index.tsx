@@ -1,7 +1,6 @@
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
-import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
@@ -22,29 +21,24 @@ import {
   CardContent,
   CardMedia,
   Grid,
-  Paper,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
 import PositionedMenu from "../../components/buttonMenu";
 import { useAuthContext } from "../../contexts/authContext";
-import fetchApi from "../../hooks/useApi";
 import CustomizedSwitches from "../../components/switchTheme";
+import { useGetUsers } from "../../hooks/useUserActions";
+
 
 const drawerWidth = 240;
 
 interface Props {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
   window?: () => Window;
 }
 
 export default function ResponsiveDrawer(props: Props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [users, setUsers] = React.useState<IUserProps[]>();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -53,27 +47,9 @@ export default function ResponsiveDrawer(props: Props) {
   const { user, signOut } = useAuthContext();
   const theme = useTheme();
 
+  const { getUsersFromData } = useGetUsers();
+
   const mdDown = useMediaQuery(theme.breakpoints.up("md"));
-
-  const GetUsers = async () => {
-    const token = localStorage.getItem("ED_acess_token");
-
-    try {
-      const apiResponse = await fetchApi.get("/users/", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      setUsers(apiResponse.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  React.useEffect(() => {
-    GetUsers();
-  }, []);
 
   const drawer = (
     <div>
@@ -149,7 +125,7 @@ export default function ResponsiveDrawer(props: Props) {
           </IconButton>
 
           <Typography variant="h6" noWrap component="div" flexGrow={1}>
-            Argos Plataform
+            Dashboard Plataform
           </Typography>
 
           <Box display={mdDown ? "flex" : "none"}>
@@ -163,14 +139,13 @@ export default function ResponsiveDrawer(props: Props) {
         sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
         aria-label="mailbox folders"
       >
-        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Drawer
           container={container}
           variant="temporary"
           open={mobileOpen}
           onClose={handleDrawerToggle}
           ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
+            keepMounted: true,
           }}
           sx={{
             display: { xs: "block", sm: "none" },
@@ -211,9 +186,9 @@ export default function ResponsiveDrawer(props: Props) {
             Users List
           </Typography>
           <Grid container spacing={2}>
-            {users &&
-              users.length > 0 &&
-              users.map((user) => (
+            {getUsersFromData &&
+              getUsersFromData.length > 0 &&
+              getUsersFromData.map((user) => (
                 <Grid item key={user.id} xs={12} sm={12} md={6} lg={4}>
                   <Card>
                     <CardMedia

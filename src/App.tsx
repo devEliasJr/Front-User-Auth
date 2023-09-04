@@ -10,7 +10,7 @@ import SignInPage from "./Pages/SignIn";
 
 import { RequireAuth } from "./contexts/requireAuth";
 import { useAuthContext } from "./contexts/authContext";
-import Dashboard from "./Pages/dashboard";
+import Dashboard from "./Pages/Dashboard";
 
 export default function App() {
   const auth = useAuthContext();
