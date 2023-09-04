@@ -15,16 +15,17 @@ export const getUsers = async () => {
   }
 };
 
-export const useCreateUser = ({ data }: any) => {
-  const createUser = async () => {
-    try {
-      const apiResponse = await fetchApi.post("/users", { data });
-      return apiResponse.data;
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
-  };
+export const createUser = async ({ data }: any) => {
+  try {
+    const apiResponse = await fetchApi.post("/users", { data });
+    return apiResponse.data;
+  } catch (error: any) {
+    const responseData = error.data;
 
-  return createUser;
+    if (responseData.status === "error") {
+      const errorMessage = responseData.message;
+      console.log("Mensagem de erro da API:", errorMessage);
+    }
+    throw new Error(responseData);
+  }
 };
