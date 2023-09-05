@@ -25,3 +25,8 @@ export const createUser = async (userData: any) => {
   }
 };
 
+
+export const deleteUser = async (id: string) => {
+  const response = await fetchApi.delete(`/users/${id}`)
+  return response.data
+}

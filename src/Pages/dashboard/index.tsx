@@ -16,10 +16,6 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import {
   Button,
-  Card,
-  CardActions,
-  CardContent,
-  CardMedia,
   Grid,
   useMediaQuery,
   useTheme,
@@ -38,6 +34,7 @@ interface Props {
 }
 
 export default function ResponsiveDrawer(props: Props) {
+  
   const {
     data: getUsersFromData,
     isLoading,
@@ -47,6 +44,8 @@ export default function ResponsiveDrawer(props: Props) {
     queryKey: ["usersdata"],
     queryFn: getUsers,
   });
+
+  console.log(getUsersFromData)
 
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -201,7 +200,7 @@ export default function ResponsiveDrawer(props: Props) {
             ) : (
               getUsersFromData?.map((user) => (
                 <Grid item key={user.id} xs={12} sm={12} md={6} lg={4}>
-                  <DashboardCard name={user.name} email={user.email} />
+                  <DashboardCard name={user.name} email={user.email} id={user.id}/>
                 </Grid>
               ))
             )}
