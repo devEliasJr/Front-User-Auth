@@ -11,7 +11,8 @@ import SignInPage from "./Pages/SignIn";
 import { RequireAuth } from "./contexts/requireAuth";
 import { useAuthContext } from "./contexts/authContext";
 import Dashboard from "./Pages/Dashboard";
-import Register from "./Pages/Testes";
+import Register from "./Pages/Register";
+import HomePage from "./Pages/Home";
 
 export default function App() {
   const auth = useAuthContext();
@@ -22,7 +23,7 @@ export default function App() {
       <Route path="/" element={<DefaultLayout />}>
         <Route
           index
-          element={!user ? <SignInPage /> : <Navigate to="/dashboard" />}
+          element={!user ? <HomePage /> : <Navigate to="/dashboard" />}
         />
 
         <Route

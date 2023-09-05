@@ -1,7 +1,7 @@
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
+
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
@@ -11,10 +11,12 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
-import { useAuthContext } from "../../contexts/authContext";
+
 import { Alert } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import CustomizedSwitches from "../../components/switchTheme";
+import { useMutation } from "react-query";
+import { createUser } from "../../hooks/useUserActions";
 
 function Copyright({ site, link }: ICopyrightProps) {
   return (
@@ -29,8 +31,11 @@ function Copyright({ site, link }: ICopyrightProps) {
   );
 }
 
-export default function SignInPage() {
-  const { signIn, error } = useAuthContext();
+export default function Register() {
+  const { mutate, error, isError, isLoading } = useMutation({
+    mutationFn: createUser,
+  });
+
   const navigate = useNavigate();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -38,19 +43,21 @@ export default function SignInPage() {
 
     const data = new FormData(event.currentTarget);
 
-    const { email, password } = {
+    const userData = {
+      name: data.get("name"),
       email: data.get("email"),
       password: data.get("password"),
     };
 
-    if (!email && !password) {
+    if (!userData.name || !userData.email || !userData.password) {
       return;
     }
 
-    const res = await signIn(email, password);
-    const ApiSucesslogin = JSON.stringify(res);
-    if (ApiSucesslogin) {
-      navigate("/dashboard");
+    mutate(userData);
+
+    if (!isError && !isLoading) {
+      window.location.reload();
+      alert("Created successfully");
     }
   };
 
@@ -68,9 +75,19 @@ export default function SignInPage() {
         <LockOutlinedIcon />
       </Avatar>
       <Typography component="h1" variant="h5">
-        Sign in
+        Register
       </Typography>
       <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+        <TextField
+          margin="normal"
+          required
+          fullWidth
+          id="name"
+          label="Name"
+          name="name"
+          autoComplete="name"
+          autoFocus
+        />
         <TextField
           margin="normal"
           required
@@ -102,15 +119,26 @@ export default function SignInPage() {
           sx={{ mt: 3, mb: 2 }}
           color="primary"
         >
-          Sign In
+          Sign Up
         </Button>
-
+        <Grid container>
+          <Grid item xs>
+            <Link href="#" variant="body2">
+              Forgot password?
+            </Link>
+          </Grid>
+          <Grid item>
+            <Link href="#" variant="body2">
+              {"Don't have an account? Sign Up"}
+            </Link>
+          </Grid>
+        </Grid>
         <Copyright site="Elias Dev" link="https://mui.com/" />
       </Box>
       <Box m={"0 auto"} p={4}>
         <CustomizedSwitches />
       </Box>
-      {error && <Alert severity="error">{error}</Alert>}
+      {isError && <Alert severity="error">{(error as Error).message}</Alert>}
     </Box>
   );
 }
