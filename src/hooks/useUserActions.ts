@@ -1,3 +1,4 @@
+import { AxiosError } from "axios";
 import fetchApi from "./useApi";
 
 export const getUsers = async () => {
@@ -15,17 +16,12 @@ export const getUsers = async () => {
   }
 };
 
-export const createUser = async ({ data }: any) => {
+export const createUser = async (userData: any) => {
   try {
-    const apiResponse = await fetchApi.post("/users", { data });
-    return apiResponse.data;
+    const res = await fetchApi.post("/users/", userData);
+    return res;
   } catch (error: any) {
-    const responseData = error.data;
-
-    if (responseData.status === "error") {
-      const errorMessage = responseData.message;
-      console.log("Mensagem de erro da API:", errorMessage);
-    }
-    throw new Error(responseData);
+    throw new Error(error.response.data.message)
   }
 };
+

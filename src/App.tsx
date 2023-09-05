@@ -11,6 +11,7 @@ import SignInPage from "./Pages/SignIn";
 import { RequireAuth } from "./contexts/requireAuth";
 import { useAuthContext } from "./contexts/authContext";
 import Dashboard from "./Pages/Dashboard";
+import Register from "./Pages/Testes";
 
 export default function App() {
   const auth = useAuthContext();
@@ -32,6 +33,7 @@ export default function App() {
             </RequireAuth>
           }
         />
+        <Route path="/register" element={<Register />}></Route>
       </Route>
     )
   );
