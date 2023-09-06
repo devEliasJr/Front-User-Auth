@@ -46,6 +46,9 @@ export const createUser = async (userData: any) => {
     return res;
   } catch (error) {
     if (error instanceof AxiosError) {
+      if (error.response?.status === 404) {
+        throw new Error("Internal Server Error, try again later");
+      }
       throw new Error(error.response?.data.message);
     }
   }

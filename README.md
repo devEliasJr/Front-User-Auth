@@ -56,7 +56,7 @@ Para começar a utilizar este projeto, siga os passos abaixo:
 ### 1. Clone o repositório:
 
 ```bash
- git clone https://github.com/seu-usuario/seu-projeto.git .
+ git clone https://github.com/devEliasJr/Front-User-Auth .
 ```
 
 ### 2. Instale as dependências do projeto
