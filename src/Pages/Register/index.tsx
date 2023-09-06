@@ -1,16 +1,21 @@
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
+import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
+
 import { Alert } from "@mui/material";
+
 import CustomizedSwitches from "../../components/switchTheme";
+
 import { createUser } from "../../hooks/useUserActions";
 
 function Copyright({ site, link }: ICopyrightProps) {
@@ -31,7 +36,6 @@ export default function Register() {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
     setError(null);
 
     const data = new FormData(event.currentTarget);
@@ -65,7 +69,7 @@ export default function Register() {
         <LockOutlinedIcon />
       </Avatar>
       <Typography component="h1" variant="h5">
-        Register
+        Sign Up
       </Typography>
       <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
         <TextField
@@ -111,18 +115,7 @@ export default function Register() {
         >
           Sign Up
         </Button>
-        <Grid container>
-          <Grid item xs>
-            <Link href="#" variant="body2">
-              Forgot password?
-            </Link>
-          </Grid>
-          <Grid item>
-            <Link href="#" variant="body2">
-              {"Don't have an account? Sign Up"}
-            </Link>
-          </Grid>
-        </Grid>
+
         <Copyright site="Elias Dev" link="https://mui.com/" />
       </Box>
       <Box m={"0 auto"} p={4}>

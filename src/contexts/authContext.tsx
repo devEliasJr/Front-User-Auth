@@ -55,7 +55,7 @@ export default function AuthProvider({ children }: any) {
 
       return { code: 200, message: "Login successful" };
     } catch (error) {
-      return setError("Credenciais Invalidas");
+      return setError("Invalid Credentials");
     }
   };
 

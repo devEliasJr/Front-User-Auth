@@ -3,9 +3,8 @@ interface ICopyrightProps {
   link: string;
 }
 
-type CardProps = {
+interface CardProps {
   id: string;
   name: string;
   email: string;
-};
-
+}
