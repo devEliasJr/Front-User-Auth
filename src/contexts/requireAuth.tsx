@@ -1,7 +1,7 @@
 import { Box, CircularProgress } from "@mui/material";
 
 import { useAuthContext } from "./authContext";
-import SignInPage from "../Pages/SignIn";
+import HomePage from "../Pages/Home";
 
 export const RequireAuth = ({ children }: { children: JSX.Element }) => {
   const { user, loadingDashboard } = useAuthContext();
@@ -22,7 +22,7 @@ export const RequireAuth = ({ children }: { children: JSX.Element }) => {
   }
 
   if (!user && !loadingDashboard) {
-    return <SignInPage />;
+    return <HomePage />;
   }
 
   return children;
