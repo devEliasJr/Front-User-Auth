@@ -14,12 +14,7 @@ import MailIcon from "@mui/icons-material/Mail";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import {
-  Button,
-  Grid,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
+import { Button, Grid, useMediaQuery, useTheme } from "@mui/material";
 import PositionedMenu from "../../components/buttonMenu";
 import { useAuthContext } from "../../contexts/authContext";
 import CustomizedSwitches from "../../components/switchTheme";
@@ -34,7 +29,6 @@ interface Props {
 }
 
 export default function ResponsiveDrawer(props: Props) {
-  
   const {
     data: getUsersFromData,
     isLoading,
@@ -44,8 +38,6 @@ export default function ResponsiveDrawer(props: Props) {
     queryKey: ["usersdata"],
     queryFn: getUsers,
   });
-
-  console.log(getUsersFromData)
 
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -200,7 +192,11 @@ export default function ResponsiveDrawer(props: Props) {
             ) : (
               getUsersFromData?.map((user) => (
                 <Grid item key={user.id} xs={12} sm={12} md={6} lg={4}>
-                  <DashboardCard name={user.name} email={user.email} id={user.id}/>
+                  <DashboardCard
+                    name={user.name}
+                    email={user.email}
+                    id={user.id}
+                  />
                 </Grid>
               ))
             )}

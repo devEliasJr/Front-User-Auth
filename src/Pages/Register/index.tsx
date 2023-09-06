@@ -1,21 +1,16 @@
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
-import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
-
 import { Alert } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import CustomizedSwitches from "../../components/switchTheme";
-import { useMutation } from "react-query";
 import { createUser } from "../../hooks/useUserActions";
 
 function Copyright({ site, link }: ICopyrightProps) {
@@ -32,14 +27,12 @@ function Copyright({ site, link }: ICopyrightProps) {
 }
 
 export default function Register() {
-  const { mutate, error, isError, isLoading } = useMutation({
-    mutationFn: createUser,
-  });
-
-  const navigate = useNavigate();
+  const [error, setError] = React.useState(null);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    setError(null);
 
     const data = new FormData(event.currentTarget);
 
@@ -49,15 +42,12 @@ export default function Register() {
       password: data.get("password"),
     };
 
-    if (!userData.name || !userData.email || !userData.password) {
-      return;
-    }
-
-    mutate(userData);
-
-    if (!isError && !isLoading) {
+    try {
+      await createUser(userData);
       window.location.reload();
       alert("Created successfully");
+    } catch (err) {
+      return setError(err.message);
     }
   };
 
@@ -138,7 +128,7 @@ export default function Register() {
       <Box m={"0 auto"} p={4}>
         <CustomizedSwitches />
       </Box>
-      {isError && <Alert severity="error">{(error as Error).message}</Alert>}
+      {error && <Alert severity="error">{error}</Alert>}
     </Box>
   );
 }

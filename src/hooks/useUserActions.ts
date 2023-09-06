@@ -16,17 +16,48 @@ export const getUsers = async () => {
   }
 };
 
+export const getUser = async (id: string) => {
+  const token = localStorage.getItem("ED_acess_token");
+
+  const apiResponse = await fetchApi.get<IUserProps>(`/users/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return apiResponse.data;
+};
+
+export const editUser = async (id: string, userData: any) => {
+  const token = localStorage.getItem("ED_acess_token");
+
+  const apiResponse = await fetchApi.put<IUserProps>(`/users/${id}`, userData, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return apiResponse.data;
+};
+
 export const createUser = async (userData: any) => {
   try {
     const res = await fetchApi.post("/users/", userData);
     return res;
-  } catch (error: any) {
-    throw new Error(error.response.data.message)
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      throw new Error(error.response?.data.message);
+    }
   }
 };
 
-
 export const deleteUser = async (id: string) => {
-  const response = await fetchApi.delete(`/users/${id}`)
-  return response.data
-}
+  try {
+    const response = await fetchApi.delete(`/users/${id}`);
+    return response.data;
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      throw new Error(error.response?.data.message);
+    }
+  }
+};

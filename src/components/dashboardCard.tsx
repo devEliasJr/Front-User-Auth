@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Card,
   CardActions,
@@ -6,17 +7,15 @@ import {
   CardMedia,
   Typography,
 } from "@mui/material";
-import { deleteUser, getUsers } from "../hooks/useUserActions";
+import { deleteUser, getUser } from "../hooks/useUserActions";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-
-type CardProps = {
-  id: string;
-  name: string;
-  email: string;
-};
+import { useState } from "react";
+import EditUserModal from "./editUserModal";
 
 export default function DashboardCard({ id, name, email }: CardProps) {
+  const [userId, setUserId] = useState<string>();
   const queryClient = useQueryClient();
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   const buttonsActions = [
     { key: 1, text: "See More", action: () => handleSeeMore(id) },
@@ -43,8 +42,13 @@ export default function DashboardCard({ id, name, email }: CardProps) {
     console.log(`See ${id}`);
   };
 
-  const handleEdit = (id: string) => {
-    console.log(`Edit ${id}`);
+  const handleEdit = async (id: string) => {
+    setUserId(id);
+    setIsEditModalOpen(true);
+  };
+
+  const handleCloseEditModal = () => {
+    setIsEditModalOpen(false);
   };
 
   return (
@@ -72,6 +76,12 @@ export default function DashboardCard({ id, name, email }: CardProps) {
               </Button>
             ))}
           </CardActions>
+          {/* Modal de edição */}
+          <EditUserModal
+            isOpen={isEditModalOpen}
+            onClose={handleCloseEditModal}
+            userId={userId}
+          />
         </Card>
       )}
     </>
