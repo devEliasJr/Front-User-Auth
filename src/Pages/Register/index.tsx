@@ -1,35 +1,16 @@
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
-import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
-
 import { Alert } from "@mui/material";
-
 import CustomizedSwitches from "../../components/switchTheme";
-
 import { createUser } from "../../hooks/useUserActions";
-
-function Copyright({ site, link }: ICopyrightProps) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" my={2}>
-      {"Copyright © "}
-      <Link color="inherit" href={link}>
-        {site}
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+import { Copyright } from "../../components/copyrightElement";
 
 export default function Register() {
   const [error, setError] = React.useState(null);
@@ -116,7 +97,7 @@ export default function Register() {
           Sign Up
         </Button>
 
-        <Copyright site="Elias Dev" link="https://mui.com/" />
+        <Copyright site="Elias Dev" link="https://eliasdev.tech/" />
       </Box>
       <Box m={"0 auto"} p={4}>
         <CustomizedSwitches />

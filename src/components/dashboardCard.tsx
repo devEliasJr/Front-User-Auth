@@ -29,7 +29,7 @@ export default function DashboardCard({ id, name, email }: CardProps) {
 
   const handleDelete = async (id: string) => {
     const shouldDelete = window.confirm(
-      "Tem certeza que deseja excluir este usuário?"
+      "Are you sure you want to delete this user?"
     );
 
     if (shouldDelete) {

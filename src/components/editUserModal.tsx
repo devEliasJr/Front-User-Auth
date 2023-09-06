@@ -62,7 +62,7 @@ const EditUserModal: React.FC<EditUserModalProps> = ({
       aria-describedby="modal-description"
     >
       <Box sx={style}>
-        <h2 id="modal-title">Editar Usuário</h2>
+        <h2 id="modal-title">Edit User</h2>
         <TextField
           label="Nome"
           fullWidth
@@ -81,10 +81,10 @@ const EditUserModal: React.FC<EditUserModalProps> = ({
         />
         <Box display={"flex"} justifyContent={"center"} gap={4} py={2}>
           <Button variant="contained" color="primary" onClick={handleSave}>
-            Salvar
+            Save
           </Button>
           <Button variant="outlined" onClick={onClose}>
-            Cancelar
+            Cancel
           </Button>
         </Box>
       </Box>
