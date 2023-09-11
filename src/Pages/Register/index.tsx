@@ -13,7 +13,7 @@ import { createUser } from "../../hooks/useUserActions";
 import { Copyright } from "../../components/copyrightElement";
 
 export default function Register() {
-  const [error, setError] = React.useState(null);
+  const [error, setError] = React.useState<string | null>(null);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -26,6 +26,10 @@ export default function Register() {
       email: data.get("email"),
       password: data.get("password"),
     };
+
+    if (!userData.name || !userData.email || !userData.password) {
+      return setError("All fields are required!");
+    }
 
     try {
       await createUser(userData);
@@ -82,10 +86,6 @@ export default function Register() {
           type="password"
           id="password"
           autoComplete="current-password"
-        />
-        <FormControlLabel
-          control={<Checkbox value="remember" color="primary" />}
-          label="Remember me"
         />
         <Button
           type="submit"
